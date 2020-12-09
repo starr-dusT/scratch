@@ -1,0 +1,178 @@
+* Feed :elfeed:
+** Youtube :youtube:
+*** Linux :linux:
+**** DistroTube
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCVls1GmFKf6WlTraIb_IaJg
+**** the_dev_aspect
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCAiiOTio8Yu69c3XnR7nQBQ
+*** Politics :politics:
+**** Ben Shaprio
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCnQC_G5Xsjhp9fEJKuIcrSw
+**** Gad Sadd
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCLH7qUqM0PLieCVaHA7RegA
+**** John Stossel 
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCjo1uN-aM3rmBV46xj7l2KA
+**** Ayn Rand Institute 
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCM6z9wqPxdRHjAC_Pjdp5yQ
+**** Yaron Brook
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCabMx-URCjr2toe9wOE3Y-Q
+**** Matt Christiansen
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCxeY-wRrb65Jt37QHa5xMog
+**** Jordan B Peterson
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCL_f53ZEJxp8TtlOkHwMV9Q
+**** Alex Epstein
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCYi3PK144qrY_YGWFyAbK1A
+**** The Rubin Report
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCJdKr0Bgd_5saZYqLCa9mng
+**** StevenCrowder
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCIveFvW-ARp_B_RckhweNJw
+*** Esports :esports:
+**** Thoorin
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCfeeUuW7edMxF3M_cyxGT8Q
+**** Thorin's Side
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UC4rma8fFU0UmxiiVzH8RHDA
+**** Richard Luis
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCEOQ9pSmMEIqfhtCDa2JORw
+**** Flashpoint
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCYUjhL1J2aIl6OuQOVreWog
+**** Peekers Advantage
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCpxpKEce1pwNURneNIJpQjw 
+**** Classic Tetris
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UC-8BAEcWSEs4-KQp1ULVnaQ
+**** Joseph Saelee
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UC9yubS4W7CdoD5F8RNz4Fuw
+**** InsightOnEsports
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UC4AGeYoOM9lRH6-L7wNFgTQ
+*** Gaming :gaming:
+**** Warowl
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCpFcHE36IoySjYj1Rytxyog
+**** videogamedunkey
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCsvn_Po0SmunchJYOWpOxMg
+**** ryukahr
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCNUzWfHUP_iXZ1GMHz8gBgw
+**** Mega64
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCXuqSBlHAE6Xw-yeJA0Tunw
+**** NakeyJakey
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCSdma21fnJzgmPodhC9SJ3g
+**** Super Bunnyhop
+***** https://www.youtube.com/feeds/videos.xml?channel_id=https://www.youtube.com/channel/UCWqr2tH3dPshNhPjV5h1xRw
+**** Jim Sterling
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCWCw2Sd7RlYJ2yuNVHDWNOA
+*** Tech :tech:
+**** Louis Rossmann
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCl2mFZoRqjw_ELax4Yisf6w
+**** Louis Rossman: RANDOM LIVE
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UC6nZlvfz4YWoBWbjiaYJA3g
+**** Gamers Nexus 
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UChIs72whgZI9w6d6FhwGGHA
+**** Linus Tech Tips
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCXuqSBlHAE6Xw-yeJA0Tunw
+**** Level1Techs
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UC4w1YQAJMWOz4qtxinq55LQ
+**** Level1Linux
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCOWcZ6Wicl-1N34H0zZe38w
+*** Comedy :comedy:
+**** Ricky Berwick
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCnBhY8jMEZzSSuFPz6JSAxQ
+**** JonTronShow
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCdJdEguB1F1CiYe7OEi3SBg
+**** Internet Historian 
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCR1D15p_vdP3HkrH8wgjQRw
+**** Internet Historian: Incognito Mode 
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UC8Q7XEy86Q7T-3kNpNjYgwA
+**** iDubbzTV
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UC4USoIAL9qcsx5nCZV_QRnA
+**** Gus Johnson
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCpIafFPGutTAKOBHMtGen7g
+*** Podcasts :podcasts:
+**** PowerfulJRE
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCzQUP1qoWDoEbmsQxvdjxgQ 
+**** YourMomsHousePodcast
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCYIgiXwJck_Pb5Nj-wIrsqg
+**** No Dumb Questions
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCVnIvJuTZqM5nnwGFpA57_Q
+*** Outdoors :outdoors:
+**** Ed Pratt 
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCuNy42Y5egf07cSiHbF23wg 
+**** FlightChops 
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCPOMdL9KIwcFMG9Bxppk4Mw 
+**** Flyers District
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCvfBCBy8EbQZicecw6byqzw 
+**** Mike Boyd
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCIRiWCPZoUyZDbydIqitHtQ 
+**** Wim Hoff 
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCxHTM1FYxeC4F7xDsBVltGg 
+**** Yoga With Tim 
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCciuZl2ydLCvN5txlLW0rIg 
+**** Ali Clarkson 
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCfw8Z6Q7rl_SBczXUdJESHA 
+**** Brave Dave
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCqwSZMx11ksCLcYbAs1vZ7w
+**** PrettyGoodChannel
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCAAXv_ZNIkLe1Lfbs2CqG2A
+*** Projects :projects:
+**** AvE 
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UChWv6Pn_zP0rI6lgGt3MyfA 
+**** William Osman
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCfMJ2MchTSW2kWaT0kK94Yw 
+**** Tom Stanton
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UC67gfx2Fg7K2NSHqoENVgwA 
+**** This Old Tony
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UC5NO8MgTQKHAWXp6z8Xl7yQ
+**** Wintergatan
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCcXhhVwCT6_WqjkEniejRJQ
+**** CuriousMarc
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UC3bosUr3WlKYm4sBaLs-Adw
+**** colinfurze
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCp68_FLety0O-n9QU6phsgw
+**** Cody'sLab
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCu6mSoMNzHQiBIOCkHUa2Aw
+**** BPS.space
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCILl8ozWuxnFYXIe2svjHhg
+**** Ben Heck Hacks
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCgeStlUnitobx8QcSxTw2aQ
+**** Ben Eater
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCS0N5baNlQWJCUrhCEo8WlA
+**** PeterSripol
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UC7yF9tV4xWEMZkel7q8La_w
+**** ElectroBOOM
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCJ0-OtVpF0wOKEqT2Z1HEtA
+*** Flight :flight:
+**** FlightChops
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCPOMdL9KIwcFMG9Bxppk4Mw
+**** FliteTest
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UC9zTuyWffK9ckEz1216noAw
+**** Flyers District
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCvfBCBy8EbQZicecw6byqzw
+**** Joshua Bardwell
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCX3eufnI7A2I7IkKHZn8KSQ
+**** KababFPV
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UC4yjtLpqFmlVncUFExoVjiQ
+**** Mr Steele
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCQEqPV0AwJ6mQYLmSO0rcNA
+**** NURK FPV
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCPCc4i_lIw-fW9oBXh6yTnw
+**** Tucker Gott 
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCASjdyu0y8XQ9qJnqxsKHnQ 
+**** StingersSwarm
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCqHQthEPjXHol-bFJiMjCjw
+**** xjet
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCQ2sg7vS7JkxKwtZuFZzn-g
+*** Education :education:
+**** SmarterEveryDay
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UC6107grRI4m0o2-emgoDnAA
+**** SmarterEveryDay2
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UC8VkNBOwvsTlFjoSnNSMmxw
+**** Veritasium
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCHnyfMqiRRG1u-2MsSQLbXA
+**** Lawful Masses
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UChBJtu4BhT8b8t9Qe9R-EZg
+*** Music :music:
+**** Smooth McGroove
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCJvBEEqTaLaKclbCPgIjBSQ
+**** TwoSetViolin
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCAzKFALPuF_EPe-AEI0WFFw
+**** Hilary Hahn
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCI9pm8WplvpIN8uKpoxcXaQ
+**** CharlesBerthoud
+***** https://www.youtube.com/feeds/videos.xml?channel_id=UCAi_uNeDWRXj8C8yw358gWw
