@@ -1,156 +1,8 @@
-+TITLE: Scratch Emacs Config
-#+PROPERTY: header-args:emacs-lisp
-
-* Table of Contents
-:PROPERTIES:
-:TOC:      :include all :depth 3
-:END:
-:CONTENTS:
-- [[#table-of-contents][Table of Contents]]
-- [[#system-configuration][System Configuration]]
-  - [[#lexical-binding][Lexical Binding]]
-  - [[#this-system][This-System]]
-  - [[#package-management][Package Management]]
-  - [[#startup][Startup]]
-  - [[#runtime-performance][Runtime Performance]]
-  - [[#clean-emacsd][Clean emacs.d]]
-  - [[#buffers][Buffers]]
-  - [[#server-mode][Server Mode]]
-  - [[#ido][IDO]]
-- [[#general-configuration][General Configuration]]
-  - [[#completions][Completions]]
-  - [[#ui][UI]]
-    - [[#ui-elements][UI Elements]]
-    - [[#scrolling][Scrolling]]
-    - [[#line-numbers][Line Numbers]]
-    - [[#file-warnings][File Warnings]]
-    - [[#hilight-matching-braces][Hilight Matching Braces]]
-    - [[#fix-annoying-buffers][Fix Annoying Buffers]]
-  - [[#theme][Theme]]
-  - [[#fonts][Fonts]]
-  - [[#mode-line][Mode Line]]
-    - [[#time-format][Time Format]]
-    - [[#diminishing][Diminishing]]
-    - [[#doom-modeline][Doom Modeline]]
-    - [[#saving-tweaks][Saving Tweaks]]
-  - [[#keybinds][Keybinds]]
-    - [[#evil][Evil!]]
-    - [[#generalel-for-moar-evil][General.el for Moar Evil!]]
-    - [[#which-key][Which-key]]
-    - [[#keycord-binds][Keycord Binds]]
-    - [[#hydra][Hydra]]
-- [[#editing][Editing]]
-  - [[#general][General]]
-  - [[#the-mighty-org-mode][The Mighty Org-mode]]
-    - [[#start][Start]]
-    - [[#tangle-on-save][Tangle on Save]]
-    - [[#update-table-of-contents-on-save][Update Table of Contents on Save]]
-    - [[#fonts-and-bullets][Fonts and Bullets]]
-    - [[#org-file-paths][Org File Paths]]
-    - [[#tasks][Tasks]]
-    - [[#capture][Capture]]
-    - [[#refile][Refile]]
-    - [[#agenda][Agenda]]
-    - [[#tags][Tags]]
-    - [[#searching][Searching]]
-    - [[#various-small-settings][Various Small Settings]]
-    - [[#helper-functions][Helper Functions]]
-    - [[#end][End]]
-    - [[#bindings][Bindings]]
-  - [[#beancount][Beancount]]
-  - [[#avy][Avy]]
-  - [[#expand-region][Expand Region]]
-  - [[#scratch][Scratch]]
-- [[#window-management][Window Management]]
-  - [[#frame-scaling][Frame Scaling]]
-  - [[#window-selection][Window Selection]]
-  - [[#window-history][Window History]]
-  - [[#burly][Burly]]
-- [[#file-browsing][File Browsing]]
-  - [[#dired][Dired]]
-  - [[#open-files-externally][Open Files Externally]]
-  - [[#open-videos-externally][Open Videos Externally]]
-  - [[#keybinds][Keybinds]]
-- [[#devel][Devel]]
-  - [[#git][Git]]
-    - [[#magit][Magit]]
-    - [[#forge][Forge]]
-    - [[#magit-todos][magit-todos]]
-    - [[#git-link][git-link]]
-  - [[#projectile][Projectile]]
-  - [[#languages][Languages]]
-    - [[#typescript-and-javascript][TypeScript and JavaScript]]
-    - [[#cc][C/C++]]
-    - [[#haskell][Haskell]]
-    - [[#rust][Rust]]
-    - [[#emacs-lisp][Emacs Lisp]]
-    - [[#html][HTML]]
-    - [[#yaml][YAML]]
-    - [[#beancount][beancount]]
-    - [[#http][HTTP]]
-    - [[#python][Python]]
-    - [[#clojure][Clojure]]
-  - [[#productivity][Productivity]]
-    - [[#syntax-checking-with-flycheck][Syntax checking with Flycheck]]
-    - [[#snippets][Snippets]]
-    - [[#smart-parens][Smart Parens]]
-    - [[#rainbow-delimiters][Rainbow Delimiters]]
-    - [[#rainbow-mode][Rainbow Mode]]
-- [[#project-specific][Project Specific]]
-  - [[#website-management][Website Management]]
-    - [[#tstarrus][tstarr.us]]
-- [[#applications][Applications]]
-  - [[#elfeed][Elfeed]]
-    - [[#general][General]]
-    - [[#keybinds][Keybinds]]
-    - [[#download-youtube-videoaudio][Download youtube video/audio]]
-    - [[#format-elfeed-entries-for-youtube][Format elfeed entries for Youtube]]
-  - [[#mu4e][Mu4e]]
-- [[#keybinds][Keybinds]]
-  - [[#general][General]]
-  - [[#main][Main]]
-  - [[#open][Open]]
-  - [[#window][Window]]
-  - [[#project][Project]]
-  - [[#git][Git]]
-  - [[#util][Util]]
-  - [[#help][Help]]
-  - [[#buffer][Buffer]]
-  - [[#dired][Dired]]
-:END:
-
-* System Configuration
-** Lexical Binding
-
-Add lexical binding tag to top of config file.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
 ;; -*- lexical-binding: t -*-
-
-#+end_src
-
-** This-System
-
-This section aims to allow users to select which portions of the configuration are used on different systems by defining this-system and the possible categories for systems. This system is simply a name identifying the current system the config is being used on. Then the categories (system-category-1, system-category-2, ...) define the possible different combinations of different systems that use that portion of the config. An example of a tangle tag follows:
-
-:tangle (if (member this-system system-category-1) "yes" "no")
-
-The above statement indicates that for following portion of the config, if the current system is a member of category-1 then it will be tangled and thus effectively added to the final config. As such, we can define different categories for the different permutations of systems that may need different portions of the config. Hopefully that all makes sense :)
-
-#+begin_src emacs-lisp :tangle yes 
 
 (setq this-system "main")
 (setq system-category-1 '("main" "work" "termux"))
 (setq system-category-2 '("main"))
-
-#+end_src
-
-** Package Management
-
-Setup package management. Some lines can be uncommented for fresh installs.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
 
 ; Use package and add archives to list
 (require 'package)
@@ -168,14 +20,6 @@ Setup package management. Some lines can be uncommented for fresh installs.
 ; Uncomment for fresh install
 (setq use-package-always-ensure t)
 
-#+end_src
-
-** Startup
-
-Make startup faster by reducing the frequency of garbage collection and then use a hook to measure Emacs startup time.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
 ;; The default is 800 kilobytes.  Measured in bytes.
 (setq gc-cons-threshold (* 50 1000 1000))
 
@@ -190,14 +34,6 @@ Make startup faster by reducing the frequency of garbage collection and then use
 
 (setq package-quickstart t)
 
-#+end_src
-
-** Runtime Performance
-
-Dial the GC threshold back down so that garbage collection happens more frequently but in less time.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))
 
@@ -206,14 +42,6 @@ Dial the GC threshold back down so that garbage collection happens more frequent
   :config
   ;; To disable collection of benchmark data after init is done.
   (add-hook 'after-init-hook 'benchmark-init/deactivate))
-
-#+end_src
-
-** Clean emacs.d 
-
-I don't want a bunch of transient files showing up as untracked in the Git repo so I move them all to another location.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
 
 ;; Keep transient cruft out of ~/.emacs.d/
 (setq user-emacs-directory "~/.cache/emacs/"
@@ -229,31 +57,9 @@ I don't want a bunch of transient files showing up as untracked in the Git repo 
         (expand-file-name (format "emacs-custom-%s.el" (user-uid)) temporary-file-directory)))
 (load custom-file t)
 
-#+end_src
-
-** Buffers 
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
 (global-auto-revert-mode t) ; Allow buffers to update from disk contents
 
-#+end_src
-
-** Server Mode
-
- Start the Emacs server from this instance so that all =emacsclient= calls are routed here.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
 (server-start)
-
-#+end_src
-
-** IDO
-
-IDO provides interactive bits and bobs for buffers and files.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
 
 (ido-mode 1)
 (ido-everywhere 1)
@@ -261,15 +67,6 @@ IDO provides interactive bits and bobs for buffers and files.
 (use-package ido-completing-read+
   :init
   (ido-ubiquitous-mode 1))
-
-#+end_src
-
-* General Configuration
-** Completions
-
-Stolen from https://github.com/MatthewZMD
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
 
 (use-package ivy
   :diminish
@@ -301,270 +98,168 @@ Stolen from https://github.com/MatthewZMD
       (interactive)
     (ivy--cd "~/")))
 
-#+end_src
-** UI
-*** UI Elements
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  (setq inhibit-startup-message t)
-  (scroll-bar-mode -1)             ; Disable visible scrollbar
-  (tool-bar-mode -1)               ; Disable the toolbar
-  (tooltip-mode -1)                ; Disable tooltips
-  (set-fringe-mode 10)             ; Give some breathing room
-  (menu-bar-mode -1)               ; Disable the menu bar
-
-#+end_src
-
-*** Scrolling
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  (setq mouse-wheel-scroll-amount '(5 ((shift) . 5))) ; start out scrolling 1 line at a time
-  (setq mouse-wheel-progressive-speed nil)              ; accelerate scrolling
-  (setq mouse-wheel-follow-mouse 't)                  ; scroll window under mouse
-  (setq scroll-step 5)                                ; keyboard scroll one line at a timesetq use-dialog-box nil
-
-#+end_src
-
-*** Line Numbers
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  (column-number-mode)
-  (global-display-line-numbers-mode t)
-
-  ;; Disable line numbers for some modes
-  (dolist (mode '(org-mode-hook
-                  eshell-mode-hook))
-    (add-hook mode (lambda () (display-line-numbers-mode 0))))
-
-#+end_src
-
-*** File Warnings
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  (setq large-file-warning-threshold nil) ; Don't warn for large files
-  (setq vc-follow-symlinks t)             ; Don't warn for following symlinked files
-  (setq ad-redefinition-action 'accept)   ; Don't warn when advice is added for functions
-
-#+end_src
-
-*** Hilight Matching Braces
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  (use-package paren
-    :config
-    (set-face-attribute 'show-paren-match-expression nil :background "#363e4a")
-    (show-paren-mode 1))
-
-#+end_src
-
-*** Fix Annoying Buffers
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  (use-package popwin
-    :config
-    (popwin-mode 1))
-
-#+end_src
-
-** Theme
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  (use-package doom-themes :defer t)
-  (load-theme 'doom-gruvbox t)
-
-#+end_src
-
-** Fonts
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  ;; Set the font face based on platform
-  (set-face-attribute 'default nil :font "JetBrains Mono Nerd Font" :height 80)
-  ;; Set the fixed pitch face
-  (set-face-attribute 'fixed-pitch nil :font "JetBrains Mono Nerd Font" :height 80)
-  ;; Set the variable pitch face
-  (set-face-attribute 'variable-pitch nil :font "JetBrains Mono Nerd Font" :height 80 :weight 'regular)
-
-#+end_src
-** Mode Line
-*** Time Format
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  (setq display-time-format "%l:%M %p %b %y"
-        display-time-default-load-average nil)
-
-#+end_src
-*** Diminishing
-
-The [[https://github.com/myrjola/diminish.el][diminish]] package hides pesky minor modes from the modelines.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  (use-package diminish)
-
-#+end_src
-
-*** Doom Modeline
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  ;; You must run (all-the-icons-install-fonts) one time after
-  ;; installing this package!
-
-  (use-package minions
-    :hook (doom-modeline-mode . minions-mode)
-    :custom
-    (minions-mode-line-lighter ""))
-
-  (use-package doom-modeline
-    ;:after eshell     ;; Make sure it gets hooked after eshell
-    :hook (after-init . doom-modeline-init)
-    :custom-face
-    (mode-line ((t (:height 0.85))))
-    (mode-line-inactive ((t (:height 0.85))))
-    :custom
-    (doom-modeline-height 20)
-    (doom-modeline-bar-width 6)
-    (doom-modeline-lsp t)
-    (doom-modeline-github nil)
-    (doom-modeline-mu4e nil)
-    (doom-modeline-irc nil)
-    (doom-modeline-minor-modes t)
-    (doom-modeline-persp-name nil)
-    (doom-modeline-buffer-file-name-style 'truncate-except-project)
-    (doom-modeline-major-mode-icon nil))
-
-#+end_src
-
-*** Saving Tweaks
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  ; Auto-save changed files
-  (use-package super-save
-    :ensure t
-    :defer 1
-    :diminish super-save-mode
-    :config
-    (super-save-mode +1)
-    (setq super-save-auto-save-when-idle t))
-
-  ; Auto revert changed files
-  (global-auto-revert-mode 1)
-
-#+end_src
-
-** Keybinds
-*** Evil!
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  (defun dw/evil-hook ()
-    (dolist (mode '(custom-mode
-                    eshell-mode
-                    git-rebase-mode
-                    erc-mode
-                    circe-server-mode
-                    circe-chat-mode
-                    circe-query-mode
-                    sauron-mode
-                    term-mode))
-    (add-to-list 'evil-emacs-state-modes mode)))
-
-  (defun dw/dont-arrow-me-bro ()
-    (interactive)
-    (message "Arrow keys are bad, you know?"))
-
-  (use-package evil
-    :init
-    (setq evil-want-integration t)
-    (setq evil-want-keybinding nil)
-    (setq evil-want-C-u-scroll t)
-    (setq evil-want-C-i-jump nil)
-    (setq evil-respect-visual-line-mode t)
-    :config
-    (add-hook 'evil-mode-hook 'dw/evil-hook)
-    (evil-mode 1)
-    (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
-    (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
-
-    ;; Use visual line motions even outside of visual-line-mode buffers
-    (evil-global-set-key 'motion "j" 'evil-next-visual-line)
-    (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
-
-    ;; Disable arrow keys in normal and visual modes
-    (define-key evil-normal-state-map (kbd "<left>") 'dw/dont-arrow-me-bro)
-    (define-key evil-normal-state-map (kbd "<right>") 'dw/dont-arrow-me-bro)
-    (define-key evil-normal-state-map (kbd "<down>") 'dw/dont-arrow-me-bro)
-    (define-key evil-normal-state-map (kbd "<up>") 'dw/dont-arrow-me-bro)
-    (evil-global-set-key 'motion (kbd "<left>") 'dw/dont-arrow-me-bro)
-    (evil-global-set-key 'motion (kbd "<right>") 'dw/dont-arrow-me-bro)
-    (evil-global-set-key 'motion (kbd "<down>") 'dw/dont-arrow-me-bro)
-    (evil-global-set-key 'motion (kbd "<up>") 'dw/dont-arrow-me-bro)
-
-    (evil-set-initial-state 'messages-buffer-mode 'normal)
-    (evil-set-initial-state 'dashboard-mode 'normal))
-
-  (use-package evil-collection
-    :after evil
-    :custom
-    (evil-collection-outline-bind-tab-p nil)
-    :config
-    (evil-collection-init))
-
-#+end_src
-*** General.el for Moar Evil!
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
- (use-package general
-   :ensure t
-   :config
-   (general-evil-setup t))
-
-   (general-create-definer dw/leader-key-def
-     :keymaps '(normal insert visual emacs)
-     :prefix "SPC"
-     :global-prefix "C-SPC")
-
-#+end_src
-*** Which-key
-
-[[https://github.com/justbur/emacs-which-key][which-key]] is great for getting an overview of what keybindings are available
-based on the prefix keys you entered.  Learned about this one from Spacemacs.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  (use-package which-key
-    :init (which-key-mode)
-    :diminish which-key-mode
-    :config
-    (setq which-key-idle-delay 0.3)
-    (setq which-key-min-display-lines 6))
-
-#+end_src
-
-*** Keycord Binds
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  (use-package use-package-chords
-    :disabled
-    :config (key-chord-mode 1))
-
-#+end_src
-
-*** Hydra
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  (use-package hydra
-    :defer 1)
-
-#+end_src
-* Editing
-** General
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+(setq inhibit-startup-message t)
+(scroll-bar-mode -1)             ; Disable visible scrollbar
+(tool-bar-mode -1)               ; Disable the toolbar
+(tooltip-mode -1)                ; Disable tooltips
+(set-fringe-mode 10)             ; Give some breathing room
+(menu-bar-mode -1)               ; Disable the menu bar
+
+(setq mouse-wheel-scroll-amount '(5 ((shift) . 5))) ; start out scrolling 1 line at a time
+(setq mouse-wheel-progressive-speed nil)              ; accelerate scrolling
+(setq mouse-wheel-follow-mouse 't)                  ; scroll window under mouse
+(setq scroll-step 5)                                ; keyboard scroll one line at a timesetq use-dialog-box nil
+
+(column-number-mode)
+(global-display-line-numbers-mode t)
+
+;; Disable line numbers for some modes
+(dolist (mode '(org-mode-hook
+                eshell-mode-hook))
+  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+
+(setq large-file-warning-threshold nil) ; Don't warn for large files
+(setq vc-follow-symlinks t)             ; Don't warn for following symlinked files
+(setq ad-redefinition-action 'accept)   ; Don't warn when advice is added for functions
+
+(use-package paren
+  :config
+  (set-face-attribute 'show-paren-match-expression nil :background "#363e4a")
+  (show-paren-mode 1))
+
+(use-package popwin
+  :config
+  (popwin-mode 1))
+
+(use-package doom-themes :defer t)
+(load-theme 'doom-gruvbox t)
+
+;; Set the font face based on platform
+(set-face-attribute 'default nil :font "JetBrains Mono Nerd Font" :height 80)
+;; Set the fixed pitch face
+(set-face-attribute 'fixed-pitch nil :font "JetBrains Mono Nerd Font" :height 80)
+;; Set the variable pitch face
+(set-face-attribute 'variable-pitch nil :font "JetBrains Mono Nerd Font" :height 80 :weight 'regular)
+
+(setq display-time-format "%l:%M %p %b %y"
+      display-time-default-load-average nil)
+
+(use-package diminish)
+
+;; You must run (all-the-icons-install-fonts) one time after
+;; installing this package!
+
+(use-package minions
+  :hook (doom-modeline-mode . minions-mode)
+  :custom
+  (minions-mode-line-lighter ""))
+
+(use-package doom-modeline
+  ;:after eshell     ;; Make sure it gets hooked after eshell
+  :hook (after-init . doom-modeline-init)
+  :custom-face
+  (mode-line ((t (:height 0.85))))
+  (mode-line-inactive ((t (:height 0.85))))
+  :custom
+  (doom-modeline-height 20)
+  (doom-modeline-bar-width 6)
+  (doom-modeline-lsp t)
+  (doom-modeline-github nil)
+  (doom-modeline-mu4e nil)
+  (doom-modeline-irc nil)
+  (doom-modeline-minor-modes t)
+  (doom-modeline-persp-name nil)
+  (doom-modeline-buffer-file-name-style 'truncate-except-project)
+  (doom-modeline-major-mode-icon nil))
+
+; Auto-save changed files
+(use-package super-save
+  :ensure t
+  :defer 1
+  :diminish super-save-mode
+  :config
+  (super-save-mode +1)
+  (setq super-save-auto-save-when-idle t))
+
+; Auto revert changed files
+(global-auto-revert-mode 1)
+
+(defun dw/evil-hook ()
+  (dolist (mode '(custom-mode
+                  eshell-mode
+                  git-rebase-mode
+                  erc-mode
+                  circe-server-mode
+                  circe-chat-mode
+                  circe-query-mode
+                  sauron-mode
+                  term-mode))
+  (add-to-list 'evil-emacs-state-modes mode)))
+
+(defun dw/dont-arrow-me-bro ()
+  (interactive)
+  (message "Arrow keys are bad, you know?"))
+
+(use-package evil
+  :init
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
+  (setq evil-want-C-u-scroll t)
+  (setq evil-want-C-i-jump nil)
+  (setq evil-respect-visual-line-mode t)
+  :config
+  (add-hook 'evil-mode-hook 'dw/evil-hook)
+  (evil-mode 1)
+  (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
+  (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
+
+  ;; Use visual line motions even outside of visual-line-mode buffers
+  (evil-global-set-key 'motion "j" 'evil-next-visual-line)
+  (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
+
+  ;; Disable arrow keys in normal and visual modes
+  (define-key evil-normal-state-map (kbd "<left>") 'dw/dont-arrow-me-bro)
+  (define-key evil-normal-state-map (kbd "<right>") 'dw/dont-arrow-me-bro)
+  (define-key evil-normal-state-map (kbd "<down>") 'dw/dont-arrow-me-bro)
+  (define-key evil-normal-state-map (kbd "<up>") 'dw/dont-arrow-me-bro)
+  (evil-global-set-key 'motion (kbd "<left>") 'dw/dont-arrow-me-bro)
+  (evil-global-set-key 'motion (kbd "<right>") 'dw/dont-arrow-me-bro)
+  (evil-global-set-key 'motion (kbd "<down>") 'dw/dont-arrow-me-bro)
+  (evil-global-set-key 'motion (kbd "<up>") 'dw/dont-arrow-me-bro)
+
+  (evil-set-initial-state 'messages-buffer-mode 'normal)
+  (evil-set-initial-state 'dashboard-mode 'normal))
+
+(use-package evil-collection
+  :after evil
+  :custom
+  (evil-collection-outline-bind-tab-p nil)
+  :config
+  (evil-collection-init))
+
+(use-package general
+  :ensure t
+  :config
+  (general-evil-setup t))
+
+  (general-create-definer dw/leader-key-def
+    :keymaps '(normal insert visual emacs)
+    :prefix "SPC"
+    :global-prefix "C-SPC")
+
+(use-package which-key
+  :init (which-key-mode)
+  :diminish which-key-mode
+  :config
+  (setq which-key-idle-delay 0.3)
+  (setq which-key-min-display-lines 6))
+
+(use-package use-package-chords
+  :disabled
+  :config (key-chord-mode 1))
+
+(use-package hydra
+  :defer 1)
 
 ; Set Default indentation to 2 characters
 (setq-default tab-width 2)
@@ -594,14 +289,6 @@ based on the prefix keys you entered.  Learned about this one from Spacemacs.
 
 ;(dw/leader-key-def
 ;  "tp" 'parinfer-toggle-mode)
-
-#+end_src
-** The Mighty Org-mode
-*** Start 
-    
-Set up Org Mode with a baseline configuration.  The following sections will add more things to it.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
 
 ;; TODO: Mode this to another section
 (setq-default fill-column 80)
@@ -653,39 +340,18 @@ Set up Org Mode with a baseline configuration.  The following sections will add 
 
   ;; NOTE: Subsequent sections are still part of this use-package block!
 
-#+end_src
+;; Since we don't want to disable org-confirm-babel-evaluate all
+  ;; of the time, do it around the after-save-hook
+  (defun dw/org-babel-tangle-dont-ask ()
+  ;; Dynamic scoping to the rescue
+  (let ((org-confirm-babel-evaluate nil))
+(org-babel-tangle)))
 
-*** Tangle on Save
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-    ;; Since we don't want to disable org-confirm-babel-evaluate all
-    ;; of the time, do it around the after-save-hook
-    (defun dw/org-babel-tangle-dont-ask ()
-    ;; Dynamic scoping to the rescue
-    (let ((org-confirm-babel-evaluate nil))
-	(org-babel-tangle)))
-
-    (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'dw/org-babel-tangle-dont-ask
-						'run-at-end 'only-in-org-mode)))
-
-#+end_src
-
-*** Update Table of Contents on Save
-
-It’s nice to have a table of contents section for long literate configuration files (like this one!) so I use org-make-toc to automatically update the ToC in any header with a property named TOC.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+  (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'dw/org-babel-tangle-dont-ask
+					'run-at-end 'only-in-org-mode)))
 
 (use-package org-make-toc
   :hook (org-mode . org-make-toc-mode))
-
-#+end_src
-
-*** Fonts and Bullets
-
-Use bullet characters instead of asterisks, plus set the header font sizes to something more palatable.  A fair amount of inspiration has been taken from [[https://zzamboni.org/post/beautifying-org-mode-in-emacs/][this blog post]].
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
 
 (use-package org-bullets
   :after org
@@ -720,11 +386,6 @@ Use bullet characters instead of asterisks, plus set the header font sizes to so
 (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
 (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
 
-#+end_src
-
-*** Org File Paths
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
 ;;; Directory Options
 ;; Set default working directory for org files
 (setq org-directory "~/documents/org")
@@ -735,10 +396,6 @@ Use bullet characters instead of asterisks, plus set the header font sizes to so
                                "~/documents/org/capture/agendas"
                                "~/documents/org/capture/bookmarks"
                                "~/documents/org/capture/notes")))
-
-#+end_src
-*** Tasks 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
 
 ;;; Set Todo Options
 ;; Set keywords for todo items
@@ -763,10 +420,6 @@ Use bullet characters instead of asterisks, plus set the header font sizes to so
               ("NEXT" ("WAITING") ("CANCELLED") ("HOLD"))
               ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
 
-#+end_src
-*** Capture 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
 ;; open org-capture
 (global-set-key (kbd "C-c c") 'org-capture)
 
@@ -783,10 +436,6 @@ Use bullet characters instead of asterisks, plus set the header font sizes to so
                "* MEETING with %? :MEETING:\n%U")
               ("h" "Habit" entry (file "~/documents/org/capture/refile.org")
                "* NEXT %?\n%U\n%a\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d %a .+1d/3d>>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n"))))
-
-#+end_src
-*** Refile
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
 
 ;;; Set Task Refiling Options
 ;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
@@ -814,9 +463,6 @@ Use bullet characters instead of asterisks, plus set the header font sizes to so
   (not (member (nth 2 (org-heading-components)) org-done-keywords)))
 (setq org-refile-target-verify-function 'bh/verify-refile-target)
 
-#+end_src
-*** Agenda
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
 ;;; Custom Agenda Views
 ;; Do not dim blocked tasks
 (setq org-agenda-dim-blocked-tasks nil)
@@ -896,42 +542,26 @@ Use bullet characters instead of asterisks, plus set the header font sizes to so
                        (org-tags-match-list-sublevels nil))))
                nil))))
 
-#+end_src
-*** Tags
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  ;; Configure common tags
-  (setq org-tag-alist
-    '((:startgroup)
-       ; Put mutually exclusive tags here
-       (:endgroup)
-       ("@errand" . ?E)
-       ("@home" . ?H)
-       ("@work" . ?W)
-       ("agenda" . ?a)
-       ("planning" . ?p)
-       ("publish" . ?P)
-       ("batch" . ?b)
-       ("note" . ?n)
-       ("idea" . ?i)
-       ("thinking" . ?t)
-       ("recurring" . ?r)))
-
-#+end_src
-
-*** Searching
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+;; Configure common tags
+(setq org-tag-alist
+  '((:startgroup)
+     ; Put mutually exclusive tags here
+     (:endgroup)
+     ("@errand" . ?E)
+     ("@home" . ?H)
+     ("@work" . ?W)
+     ("agenda" . ?a)
+     ("planning" . ?p)
+     ("publish" . ?P)
+     ("batch" . ?b)
+     ("note" . ?n)
+     ("idea" . ?i)
+     ("thinking" . ?t)
+     ("recurring" . ?r)))
 
 (defun dw/search-org-files ()
   (interactive)
   (counsel-rg "" "~/documents/org/capture/notes" nil "Search Notes: "))
-
-#+end_src
-
-*** Various Small Settings
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
 
 ;;; Various Small Settings
 ;; Always hilight the current agenda line
@@ -1005,10 +635,6 @@ Use bullet characters instead of asterisks, plus set the header font sizes to so
 (setq org-agenda-span 'month)
 ;; Start the weekly agenda on Monday
 (setq org-agenda-start-on-weekday 1)
-
-#+end_src
-*** Helper Functions
- #+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
 
 ;;; Helper Functions
 (defun bh/skip-non-stuck-projects ()
@@ -1373,22 +999,8 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 (add-hook 'org-after-todo-state-change-hook 'bh/mark-next-parent-tasks-todo 'append)
 (add-hook 'org-clock-in-hook 'bh/mark-next-parent-tasks-todo 'append)
 
-
- #+end_src
-*** End  
-
- #+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
- ;; This ends the use-package org-mode block
+;; This ends the use-package org-mode block
 )
-
- #+end_src
-
-*** Bindings
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-
 
 (use-package evil-org
   :after org
@@ -1409,12 +1021,6 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 ;  "oc"  '(org-capture t :which-key "capture")
 ;  "ox"  '(org-export-dispatch t :which-key "export"))
 
-#+end_src
-
-** Beancount
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
 ;(use-package Beancount
 ;  :straight (beancount
 ;             :type git
@@ -1432,412 +1038,239 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 ;                         'full
 ;                         (rx ".bean" eos))))
 
-#+end_src
+(use-package avy
+  :commands (avy-goto-char avy-goto-word-0 avy-goto-line))
 
-** Avy
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+(dw/leader-key-def
+  "j"   '(:ignore t :which-key "jump")
+  "jj"  '(avy-goto-char :which-key "jump to char")
+  "jw"  '(avy-goto-word-0 :which-key "jump to word")
+  "jl"  '(avy-goto-line :which-key "jump to line"))
 
-  (use-package avy
-    :commands (avy-goto-char avy-goto-word-0 avy-goto-line))
+(use-package expand-region
+  :bind (("M-[" . er/expand-region)
+         ("C-(" . er/mark-outside-pairs)))
 
-  (dw/leader-key-def
-    "j"   '(:ignore t :which-key "jump")
-    "jj"  '(avy-goto-char :which-key "jump to char")
-    "jw"  '(avy-goto-word-0 :which-key "jump to word")
-    "jl"  '(avy-goto-line :which-key "jump to line"))
-
-#+end_src
-
-** Expand Region
-
-This module is absolutely necessary for working inside of Emacs Lisp files,
-especially when trying to some parent of an expression (like a =setq=).  Makes
-tweaking Org agenda views much less annoying.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  (use-package expand-region
-    :bind (("M-[" . er/expand-region)
-           ("C-(" . er/mark-outside-pairs)))
-
-#+end_src
-
-** Scratch
-
-Since the =*scratch*= buffer is pretty hard-wired into Emacs (see
-=buffer.c=), the least we could do is getting rid of its initial
-message.  No, it's using its own mode instead of ~emacs-lisp-mode~ for
-the questionable benefit of having a function inserting evaluation
-values after a newline.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
 (setq initial-scratch-message "")
 (setq initial-major-mode 'emacs-lisp-mode)
-#+END_SRC
 
-* Window Management
-** Frame Scaling
-
-The keybindings for this are =C+M+-= and =C+M+==.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  (use-package default-text-scale
-    :defer 1
-    :config
-    (default-text-scale-mode))
-
-#+end_src
-
-** Window Selection
-
-Use ace-window for selecting windows quickly.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+(use-package default-text-scale
+  :defer 1
+  :config
+  (default-text-scale-mode))
 
 (use-package ace-window
   :config
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 
-#+end_src
-
-** Window History
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
 (winner-mode)
 (define-key evil-window-map "u" 'winner-undo)
 
-#+end_src
-
-** Burly
-
-Use burly to bookmark layouts and Emacs state.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
 (use-package burly)
 
-#+end_src
+(setq dired-listing-switches "-agho --group-directories-first"
+      dired-omit-files "^\\.[^.].*"
+      dired-omit-verbose nil)
 
-* File Browsing
-** Dired 
+(autoload 'dired-omit-mode "dired-x")
 
-Stolen from [[https://github.com/daviwil][the_dev_aspect]]. I have edited to fit my needs including removing the termux logic.
+(add-hook 'dired-load-hook
+  (lambda ()
+  (interactive)
+  (dired-collapse)))
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+(add-hook 'dired-mode-hook
+  (lambda ()
+  (interactive)
+  (dired-omit-mode 1)
+  (hl-line-mode 1)))
 
-  (setq dired-listing-switches "-agho --group-directories-first"
-        dired-omit-files "^\\.[^.].*"
-        dired-omit-verbose nil)
+(use-package dired-rainbow
+  :defer 2
+  :config
+  (dired-rainbow-define-chmod directory "#6cb2eb" "d.*")
+  (dired-rainbow-define html "#eb5286" ("css" "less" "sass" "scss" "htm" "html" "jhtm" "mht" "eml" "mustache" "xhtml"))
+  (dired-rainbow-define xml "#f2d024" ("xml" "xsd" "xsl" "xslt" "wsdl" "bib" "json" "msg" "pgn" "rss" "yaml" "yml" "rdata"))
+  (dired-rainbow-define document "#9561e2" ("docm" "doc" "docx" "odb" "odt" "pdb" "pdf" "ps" "rtf" "djvu" "epub" "odp" "ppt" "pptx"))
+  (dired-rainbow-define markdown "#ffed4a" ("org" "etx" "info" "markdown" "md" "mkd" "nfo" "pod" "rst" "tex" "textfile" "txt"))
+  (dired-rainbow-define database "#6574cd" ("xlsx" "xls" "csv" "accdb" "db" "mdb" "sqlite" "nc"))
+  (dired-rainbow-define media "#de751f" ("mp3" "mp4" "mkv" "MP3" "MP4" "avi" "mpeg" "mpg" "flv" "ogg" "mov" "mid" "midi" "wav" "aiff" "flac"))
+  (dired-rainbow-define image "#f66d9b" ("tiff" "tif" "cdr" "gif" "ico" "jpeg" "jpg" "png" "psd" "eps" "svg"))
+  (dired-rainbow-define log "#c17d11" ("log"))
+  (dired-rainbow-define shell "#f6993f" ("awk" "bash" "bat" "sed" "sh" "zsh" "vim"))
+  (dired-rainbow-define interpreted "#38c172" ("py" "ipynb" "rb" "pl" "t" "msql" "mysql" "pgsql" "sql" "r" "clj" "cljs" "scala" "js"))
+  (dired-rainbow-define compiled "#4dc0b5" ("asm" "cl" "lisp" "el" "c" "h" "c++" "h++" "hpp" "hxx" "m" "cc" "cs" "cp" "cpp" "go" "f" "for" "ftn" "f90" "f95" "f03" "f08" "s" "rs" "hi" "hs" "pyc" ".java"))
+  (dired-rainbow-define executable "#8cc4ff" ("exe" "msi"))
+  (dired-rainbow-define compressed "#51d88a" ("7z" "zip" "bz2" "tgz" "txz" "gz" "xz" "z" "Z" "jar" "war" "ear" "rar" "sar" "xpi" "apk" "xz" "tar"))
+  (dired-rainbow-define packaged "#faad63" ("deb" "rpm" "apk" "jad" "jar" "cab" "pak" "pk3" "vdf" "vpk" "bsp"))
+  (dired-rainbow-define encrypted "#ffed4a" ("gpg" "pgp" "asc" "bfe" "enc" "signature" "sig" "p12" "pem"))
+  (dired-rainbow-define fonts "#6cb2eb" ("afm" "fon" "fnt" "pfb" "pfm" "ttf" "otf"))
+  (dired-rainbow-define partition "#e3342f" ("dmg" "iso" "bin" "nrg" "qcow" "toast" "vcd" "vmdk" "bak"))
+  (dired-rainbow-define vc "#0074d9" ("git" "gitignore" "gitattributes" "gitmodules"))
+  (dired-rainbow-define-chmod executable-unix "#38c172" "-.*x.*"))
 
-  (autoload 'dired-omit-mode "dired-x")
+(use-package dired-single
+  :ensure t
+  :defer t)
 
-  (add-hook 'dired-load-hook
-    (lambda ()
-    (interactive)
-    (dired-collapse)))
+(use-package dired-ranger
+  :defer t)
 
-  (add-hook 'dired-mode-hook
-    (lambda ()
-    (interactive)
-    (dired-omit-mode 1)
-    (hl-line-mode 1)))
+(use-package dired-collapse
+  :defer t)
 
-  (use-package dired-rainbow
-    :defer 2
-    :config
-    (dired-rainbow-define-chmod directory "#6cb2eb" "d.*")
-    (dired-rainbow-define html "#eb5286" ("css" "less" "sass" "scss" "htm" "html" "jhtm" "mht" "eml" "mustache" "xhtml"))
-    (dired-rainbow-define xml "#f2d024" ("xml" "xsd" "xsl" "xslt" "wsdl" "bib" "json" "msg" "pgn" "rss" "yaml" "yml" "rdata"))
-    (dired-rainbow-define document "#9561e2" ("docm" "doc" "docx" "odb" "odt" "pdb" "pdf" "ps" "rtf" "djvu" "epub" "odp" "ppt" "pptx"))
-    (dired-rainbow-define markdown "#ffed4a" ("org" "etx" "info" "markdown" "md" "mkd" "nfo" "pod" "rst" "tex" "textfile" "txt"))
-    (dired-rainbow-define database "#6574cd" ("xlsx" "xls" "csv" "accdb" "db" "mdb" "sqlite" "nc"))
-    (dired-rainbow-define media "#de751f" ("mp3" "mp4" "mkv" "MP3" "MP4" "avi" "mpeg" "mpg" "flv" "ogg" "mov" "mid" "midi" "wav" "aiff" "flac"))
-    (dired-rainbow-define image "#f66d9b" ("tiff" "tif" "cdr" "gif" "ico" "jpeg" "jpg" "png" "psd" "eps" "svg"))
-    (dired-rainbow-define log "#c17d11" ("log"))
-    (dired-rainbow-define shell "#f6993f" ("awk" "bash" "bat" "sed" "sh" "zsh" "vim"))
-    (dired-rainbow-define interpreted "#38c172" ("py" "ipynb" "rb" "pl" "t" "msql" "mysql" "pgsql" "sql" "r" "clj" "cljs" "scala" "js"))
-    (dired-rainbow-define compiled "#4dc0b5" ("asm" "cl" "lisp" "el" "c" "h" "c++" "h++" "hpp" "hxx" "m" "cc" "cs" "cp" "cpp" "go" "f" "for" "ftn" "f90" "f95" "f03" "f08" "s" "rs" "hi" "hs" "pyc" ".java"))
-    (dired-rainbow-define executable "#8cc4ff" ("exe" "msi"))
-    (dired-rainbow-define compressed "#51d88a" ("7z" "zip" "bz2" "tgz" "txz" "gz" "xz" "z" "Z" "jar" "war" "ear" "rar" "sar" "xpi" "apk" "xz" "tar"))
-    (dired-rainbow-define packaged "#faad63" ("deb" "rpm" "apk" "jad" "jar" "cab" "pak" "pk3" "vdf" "vpk" "bsp"))
-    (dired-rainbow-define encrypted "#ffed4a" ("gpg" "pgp" "asc" "bfe" "enc" "signature" "sig" "p12" "pem"))
-    (dired-rainbow-define fonts "#6cb2eb" ("afm" "fon" "fnt" "pfb" "pfm" "ttf" "otf"))
-    (dired-rainbow-define partition "#e3342f" ("dmg" "iso" "bin" "nrg" "qcow" "toast" "vcd" "vmdk" "bak"))
-    (dired-rainbow-define vc "#0074d9" ("git" "gitignore" "gitattributes" "gitmodules"))
-    (dired-rainbow-define-chmod executable-unix "#38c172" "-.*x.*"))
+(use-package openwith
+  :config
+  (setq openwith-associations
+    (list
+      (list (openwith-make-extension-regexp
+             '("mpg" "mpeg" "mp3" "mp4"
+               "avi" "wmv" "wav" "mov" "flv"
+               "ogm" "ogg" "mkv"))
+             "mpv"
+             '(file))
+      (list (openwith-make-extension-regexp
+             '("xbm" "pbm" "pgm" "ppm" "pnm"
+               "png" "gif" "bmp" "tif" "jpeg")) ;; Removed jpg because Telega was
+                                                ;; causing feh to be opened...
+             "feh"
+             '(file))
+      (list (openwith-make-extension-regexp
+             '("pdf"))
+             "zathura"
+             '(file))))
+  (openwith-mode 1))
 
-  (use-package dired-single
-    :ensure t
-    :defer t)
+(defun start-mpv (path &optional playlist-p)
 
-  (use-package dired-ranger
-    :defer t)
+  "Start mpv with specified arguments"
+  (let* ((default-cmd "mpv --force-window")
+        (cmd (if playlist-p
+                  (s-append " --loop-playlist --playlist=" default-cmd)
+                (s-append " --loop " default-cmd))))
+    (call-process-shell-command (s-concat cmd (shell-quote-argument path)) nil 0)))
 
-  (use-package dired-collapse
-    :defer t)
+(defun mpv ()
+  "Play a file in current line"
+  (interactive)
+  (start-mpv (dired-get-filename)))
 
-#+end_src
-** Open Files Externally
+(defun mpv-dir ()
+  "Play all multimedia files in current directory"
+  (interactive)
+  (start-mpv (expand-file-name default-directory)))
 
-Stolen from [[https://github.com/daviwil][the_dev_aspect]]. Didn't even bother to change it ;) 
+(defun mpv-playlist ()
+  "Play a playlist in current line"
+  (interactive)
+  (start-mpv (dired-get-filename) t))
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+(setq which-key-sort-order 'which-key-prefix-then-key-order)
 
-  (use-package openwith
-    :config
-    (setq openwith-associations
-      (list
-        (list (openwith-make-extension-regexp
-               '("mpg" "mpeg" "mp3" "mp4"
-                 "avi" "wmv" "wav" "mov" "flv"
-                 "ogm" "ogg" "mkv"))
-               "mpv"
-               '(file))
-        (list (openwith-make-extension-regexp
-               '("xbm" "pbm" "pgm" "ppm" "pnm"
-                 "png" "gif" "bmp" "tif" "jpeg")) ;; Removed jpg because Telega was
-                                                  ;; causing feh to be opened...
-               "feh"
-               '(file))
-        (list (openwith-make-extension-regexp
-               '("pdf"))
-               "zathura"
-               '(file))))
-    (openwith-mode 1))
+(evil-collection-define-key 'normal 'dired-mode-map
+  "h" 'dired-single-up-directory
+  "H" 'dired-omit-mode
+  "l" 'dired-single-buffer
+  "y" 'dired-ranger-copy
+  "X" 'dired-ranger-move
+  "p" 'dired-ranger-paste)
 
-#+end_src
+(require 'cl)
 
-** Open Videos Externally  
+(defun dw/dired-link (path)
+  (lexical-let ((target path))
+    (lambda () (interactive) (message "Path: %s" target) (dired target))))
 
-Can't remember where I stole this from. Might edit in future to integrate audio and video playing with Dired instead of using ncmpcpp for audio. I had to expand the file-name in the mpv-dir function to make it work with mpv. 
+(use-package magit
+  :commands (magit-status magit-get-current-branch)
+  :custom
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+(use-package evil-magit
+  :after magit)
 
-  (defun start-mpv (path &optional playlist-p)
+(use-package forge
+  :disabled)
 
-    "Start mpv with specified arguments"
-    (let* ((default-cmd "mpv --force-window")
-          (cmd (if playlist-p
-                    (s-append " --loop-playlist --playlist=" default-cmd)
-                  (s-append " --loop " default-cmd))))
-      (call-process-shell-command (s-concat cmd (shell-quote-argument path)) nil 0)))
-
-  (defun mpv ()
-    "Play a file in current line"
-    (interactive)
-    (start-mpv (dired-get-filename)))
-
-  (defun mpv-dir ()
-    "Play all multimedia files in current directory"
-    (interactive)
-    (start-mpv (expand-file-name default-directory)))
-
-  (defun mpv-playlist ()
-    "Play a playlist in current line"
-    (interactive)
-    (start-mpv (dired-get-filename) t))
-
-#+end_src
-
-
-** Keybinds
-
-Stolen from [[https://github.com/daviwil][the_dev_aspect]]. I have edited to fit my needs including changing/adding keybinds.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  (setq which-key-sort-order 'which-key-prefix-then-key-order)
-
-  (evil-collection-define-key 'normal 'dired-mode-map
-    "h" 'dired-single-up-directory
-    "H" 'dired-omit-mode
-    "l" 'dired-single-buffer
-    "y" 'dired-ranger-copy
-    "X" 'dired-ranger-move
-    "p" 'dired-ranger-paste)
-
-  (require 'cl)
-
-  (defun dw/dired-link (path)
-    (lexical-let ((target path))
-      (lambda () (interactive) (message "Path: %s" target) (dired target))))
-
-#+end_src
-
-* Devel
-** Git
-*** Magit
-
-https://magit.vc/manual/magit/
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  (use-package magit
-    :commands (magit-status magit-get-current-branch)
-    :custom
-    (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))
-
-  (use-package evil-magit
-    :after magit)
-
-#+end_src
-
-*** Forge
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  (use-package forge
-    :disabled)
-
-#+end_src
-
-*** magit-todos
-
-This is an interesting extension to Magit that shows a TODOs section in your
-git status buffer containing all lines with TODO (or other similar words) in
-files contained within the repo.  More information at the [[https://github.com/alphapapa/magit-todos][GitHub repo]].
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  (use-package magit-todos
-    :defer t)
-
-#+end_src
-
-*** git-link
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+(use-package magit-todos
+  :defer t)
 
 (use-package git-link
   :commands git-link
   :config
   (setq git-link-open-in-browser t))
 
-#+end_src
+(use-package projectile
+  :diminish projectile-mode
+  :config (projectile-mode)
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  :init
+  (when (file-directory-p "~/devel")
+    (setq projectile-project-search-path '("~/devel")))
+  (setq projectile-switch-project-action #'projectile-dired))
 
-** Projectile
+(use-package counsel-projectile
+  :after projectile)
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+(use-package nvm
+  :defer t)
 
-  (use-package projectile
-    :diminish projectile-mode
-    :config (projectile-mode)
-    :bind-keymap
-    ("C-c p" . projectile-command-map)
-    :init
-    (when (file-directory-p "~/devel")
-      (setq projectile-project-search-path '("~/devel")))
-    (setq projectile-switch-project-action #'projectile-dired))
+(use-package typescript-mode
+  :mode "\\.ts\\'"
+  :config
+  (setq typescript-indent-level 2))
 
-  (use-package counsel-projectile
-    :after projectile)
+(defun dw/set-js-indentation ()
+  (setq js-indent-level 2)
+  (setq evil-shift-width js-indent-level)
+  (setq-default tab-width 2))
 
-#+end_src
+(use-package js2-mode
+  :mode "\\.jsx?\\'"
+  :config
+  ;; Use js2-mode for Node scripts
+  (add-to-list 'magic-mode-alist '("#!/usr/bin/env node" . js2-mode))
 
-** Languages
-*** TypeScript and JavaScript
+  ;; Don't use built-in syntax checking
+  (setq js2-mode-show-strict-warnings nil)
 
-Set up nvm so that we can manage Node versions
+  ;; Set up proper indentation in JavaScript and JSON files
+  (add-hook 'js2-mode-hook #'dw/set-js-indentation)
+  (add-hook 'json-mode-hook #'dw/set-js-indentation))
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  (use-package nvm
-    :defer t)
-
-#+end_src
-
-Configure TypeScript and JavaScript language modes
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  (use-package typescript-mode
-    :mode "\\.ts\\'"
-    :config
-    (setq typescript-indent-level 2))
-
-  (defun dw/set-js-indentation ()
-    (setq js-indent-level 2)
-    (setq evil-shift-width js-indent-level)
-    (setq-default tab-width 2))
-
-  (use-package js2-mode
-    :mode "\\.jsx?\\'"
-    :config
-    ;; Use js2-mode for Node scripts
-    (add-to-list 'magic-mode-alist '("#!/usr/bin/env node" . js2-mode))
-
-    ;; Don't use built-in syntax checking
-    (setq js2-mode-show-strict-warnings nil)
-
-    ;; Set up proper indentation in JavaScript and JSON files
-    (add-hook 'js2-mode-hook #'dw/set-js-indentation)
-    (add-hook 'json-mode-hook #'dw/set-js-indentation))
-
-  (use-package prettier-js
-    :hook ((js2-mode . prettier-js-mode)
-           (typescript-mode . prettier-js-mode))
-    :config
-    (setq prettier-js-show-errors nil))
-
-#+end_src
-
-*** C/C++
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+(use-package prettier-js
+  :hook ((js2-mode . prettier-js-mode)
+         (typescript-mode . prettier-js-mode))
+  :config
+  (setq prettier-js-show-errors nil))
 
 (use-package ccls
   :hook ((c-mode c++-mode objc-mode cuda-mode) .
          (lambda () (quire 'ccls) (lsp))))
 
-#+end_src
+(use-package haskell-mode)
 
-*** Haskell
+(use-package rust-mode
+  :mode "\\.rs\\'"
+  :init (setq rust-format-on-save t))
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+(use-package cargo
+  :ensure t
+  :defer t)
 
-(use-package haskell-mode) 
+(add-hook 'emacs-lisp-mode-hook #'flycheck-mode)
 
-#+end_src
-
-*** Rust
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  (use-package rust-mode
-    :mode "\\.rs\\'"
-    :init (setq rust-format-on-save t))
-
-  (use-package cargo
-    :ensure t
-    :defer t)
-
-#+end_src
-
-*** Emacs Lisp
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  (add-hook 'emacs-lisp-mode-hook #'flycheck-mode)
-
-  (use-package helpful
-    :ensure t
-    :custom
-    (counsel-describe-function-function #'helpful-callable)
-    (counsel-describe-variable-function #'helpful-variable)
-    :bind
-    ([remap describe-function] . counsel-describe-function)
-    ([remap describe-command] . helpful-command)
-    ([remap describe-variable] . counsel-describe-variable)
-    ([remap describe-key] . helpful-key))
-
-#+end_src
-
-
-*** HTML
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+(use-package helpful
+  :ensure t
+  :custom
+  (counsel-describe-function-function #'helpful-callable)
+  (counsel-describe-variable-function #'helpful-variable)
+  :bind
+  ([remap describe-function] . counsel-describe-function)
+  ([remap describe-command] . helpful-command)
+  ([remap describe-variable] . counsel-describe-variable)
+  ([remap describe-key] . helpful-key))
 
 (use-package web-mode
   :mode "(\\.\\(html?\\|ejs\\|tsx\\|jsx\\)\\'"
@@ -1854,22 +1287,8 @@ Configure TypeScript and JavaScript language modes
 (use-package skewer-mode
   :ensure t)
 
-#+end_src
-
-*** YAML
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  (use-package yaml-mode
-    :mode "\\.ya?ml\\'")
-
-#+end_src
-
-*** beancount
-**** Github stolen beancount functions
-Provide beancount major mode for personal ledger.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+(use-package yaml-mode
+  :mode "\\.ya?ml\\'")
 
 (autoload 'ido-completing-read "ido")
 (require 'subr-x)
@@ -2849,12 +2268,6 @@ Essentially a much simplified version of `next-line'."
 
 (provide 'beancount)
 
-#+end_src
-
-**** My beancount functions
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
 (defun beancount-fixme-replace ()
   "Search for next FIXME in ledger and insert account."
   (interactive)
@@ -2863,32 +2276,12 @@ Essentially a much simplified version of `next-line'."
         (replace-match "" nil nil)
         (call-interactively 'beancount-insert-account))))
 
-#+end_src
-
-**** Keybinds
-
-Define Evil keybinds for editing Beancount ledger files.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
 ; Custom keybinds for the entry view
 (evil-define-key 'normal beancount-mode-map
   (kbd "C-c C-n") 'beancount-fixme-replace)
 
-#+end_src
-
-*** HTTP
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  (use-package know-your-http-well
-    :defer t)
-
-#+end_src
-
-*** Python
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+(use-package know-your-http-well
+  :defer t)
 
 (use-package elpy
   :ensure t
@@ -2900,78 +2293,28 @@ Define Evil keybinds for editing Beancount ledger files.
       python-shell-prompt-detect-failure-warning nil)
 (add-to-list 'python-shell-completion-native-disabled-interpreters "jupyter")
 
-#+end_src
-
-*** Clojure
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
 (use-package cider)
 
-#+end_src
+(use-package flycheck
+  :defer t
+  :hook (lsp-mode . flycheck-mode))
 
-** Productivity
-*** Syntax checking with Flycheck
+(use-package yasnippet
+  :hook (prog-mode . yas-minor-mode)
+  :config
+  (yas-reload-all))
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+(use-package smartparens
+  :hook (prog-mode . smartparens-mode))
 
-  (use-package flycheck
-    :defer t
-    :hook (lsp-mode . flycheck-mode))
-
-#+end_src
-
-*** Snippets
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  (use-package yasnippet
-    :hook (prog-mode . yas-minor-mode)
-    :config
-    (yas-reload-all))
-
-#+end_src
-
-*** Smart Parens
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  (use-package smartparens
-    :hook (prog-mode . smartparens-mode))
-
-#+end_src
-
-*** Rainbow Delimiters
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
-  (use-package rainbow-delimiters
-    :hook (prog-mode . rainbow-delimiters-mode))
-
-#+end_src
-
-*** Rainbow Mode
-
-Sets the background of HTML color strings in buffers to be the color mentioned.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package rainbow-mode
   :defer t
   :hook (org-mode
          emacs-lisp-mode
          js2-mode))
-
-#+end_src
-
-
-* Project Specific
-** Website Management
-*** tstarr.us 
-
-Functions and keybinds for publishing my org-based personal website
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
 
 ;; Example from the_dev_aspect's config
 
@@ -2980,16 +2323,6 @@ Functions and keybinds for publishing my org-based personal website
 ;   (start-process-shell-command "emacs" nil "emacs --batch -l ~/Projects/Writing/Blog/publish.el --funcall dw/publish"))
 
 ;; Add keybinds here to
-
-#+end_src
-
-* Applications
-** Elfeed
-*** General
-
-Initial setup for elfeed.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-2) "yes" "no")
 
 ; Use elfeed
 (use-package elfeed
@@ -3011,14 +2344,6 @@ Initial setup for elfeed.
   (elfeed-update)
   (elfeed))
 
-#+end_src
-
-*** Keybinds
-
-Define elfeed only keybinds and fixes using Evil.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-2) "yes" "no")
-
 ; Custom keybinds for the entry view
 (evil-define-key 'normal elfeed-show-mode-map 
   "v" 'elfeed-download-yt-video 
@@ -3031,14 +2356,6 @@ Define elfeed only keybinds and fixes using Evil.
 ; Fix keybinds for evil modes in elfeed
 (add-to-list 'evil-emacs-state-modes 'elfeed-search-mode)
 (add-to-list 'evil-emacs-state-modes 'elfeed-show-mode)
-
-#+end_src
-
-*** Download youtube video/audio
-
-Use youtube-dl to download audio/video from elfeed entries. 
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-2) "yes" "no")
 
 ; Set executable path for the most illegal youtube-dl ;)
 (setq youtube-dl-path "/usr/bin/youtube-dl")
@@ -3094,14 +2411,6 @@ Use youtube-dl to download audio/video from elfeed entries.
 ;          (elfeed-make-tagger :feed-url "youtube\\.com"
 ;                              :add '(video youtube)))
 
-#+end_src
-
-*** Format elfeed entries for Youtube
-
-Adds a nice formatted youtube entry. Stolen from https://github.com/xFA25E.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-2) "yes" "no")
-
 (require 'elfeed-db)
 (require 'xml-query)
 
@@ -3137,12 +2446,6 @@ information with future `DB-ENTRY'. `TYPE' is ignored."
 ;;; elfeed-youtube-parser.el ends here
 
 (add-hook 'elfeed-new-entry-parse-hook 'elfeed-youtube-parser-parse-youtube)
-
-#+end_src
-
-** Mu4e 
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-2) "yes" "no")
 
 (use-package mu4e
   :defer t
@@ -3211,25 +2514,8 @@ information with future `DB-ENTRY'. `TYPE' is ignored."
   ;; don't keep message buffers around
   (setq message-kill-buffer-on-exit t))
 
-#+end_src
-
-* Keybinds
-** General
-
-Define base bindings that aren't SPC lead.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
 ; Make ESC cancel all mini-buffer menus
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-
-#+end_src
-
-** Main
-
-Define SPC lead bindings that don't have submenus.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
 
 ; Make ESC cancel all mini-buffer menus
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -3258,14 +2544,6 @@ Define SPC lead bindings that don't have submenus.
   ;"s"    '(:ignore t             :which-key "search")
   ;"t"    '(:ignore t             :which-key "toggle"))
 
-#+end_src
-
-** Open 
-
-Define SPC lead bindings that open Emacs programs.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
 ; Menu for opening applications
 (dw/leader-key-def
   "o"    '(:ignore t   :which-key "open")
@@ -3273,24 +2551,9 @@ Define SPC lead bindings that open Emacs programs.
   "oe"    '(elfeed     :which-key "Elfeed")
   "oa"    '(org-agenda :which-key "Agenda"))
 
-#+end_src
-
-** Window
-
-Define SPC lead bindings that manipulate Emacs windows.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
 ; Open evil-window keybind menus
 (dw/leader-key-def
   "w"  '(evil-window-map :which-key "window"))
-
-#+end_src
-
-** Project 
-
-Define SPC lead bindings for projectile.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
 
 ; Commands for projectile projects
 (dw/leader-key-def
@@ -3315,14 +2578,6 @@ Define SPC lead bindings for projectile.
   "pt"  '(magit-todos-list                       :which-key "List project todos")
   "pT"  '(projectile-test-project                :which-key "Test project"))
 
-#+end_src
-
-** Git
-
-Define SPC lead bindings for magit.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
 ; Commands for magit
 (dw/leader-key-def
   "g"   '(:ignore t                :which-key "git")
@@ -3339,39 +2594,15 @@ Define SPC lead bindings for magit.
   "glc" '(magit-log-current        :which-key "Log Current")
   "glf" '(magit-log-buffer-file    :which-key "Log Buffer File"))
 
-#+end_src
-
-** Util
-
-Define SPC lead bindings for various Emacs and general system utilites.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
 ; Keybinds
 (dw/leader-key-def
   "u"   '(:ignore t :which-key "util"))
-
-#+end_src
-
-** Help
-
-Define SPC lead bindings for finding documentation.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
 
 ; Help 
 (dw/leader-key-def
   "h"   '(:ignore t :which-key "help")
   "hw"  '(:ignore t :which-key "which-key")
   "hwm" '(which-key-show-major-mode :which-key "Major binds"))
-
-#+end_src
-
-** Buffer
-
-Define SPC lead bindings that manipulate Emacs buffers and bookmarks.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
 
 ; Buffer
 (dw/leader-key-def
@@ -3396,14 +2627,6 @@ Define SPC lead bindings that manipulate Emacs buffers and bookmarks.
   "bw"   '(burly-bookmark-windows             :which-key "Bookmark windows")
   "bz"   '(bury-buffer                        :which-key "Bury buffer"))
 
-#+end_src
-
-** Dired
-
-Define SPC lead bindings for dired.
-
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
-
 (dw/leader-key-def
   "d"   '(:ignore t :which-key "dired")
   "dd"  '(dired :which-key "here")
@@ -3420,5 +2643,3 @@ Define SPC lead bindings for dired.
   "dpf"   '(mpv :which-key "file")
   "dpd"   '(mpv-dir :which-key "directory")
   "dpp"   '(mpv-playlist :which-key "playlist"))
-
-#+end_src
