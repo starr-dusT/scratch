@@ -842,9 +842,6 @@ Use bullet characters instead of asterisks, plus set the header font sizes to so
                                 (:name ""
                                    :discard (:anything)
                                    :order 99))
-
-                              
-
                               )))))))
 
   :config
