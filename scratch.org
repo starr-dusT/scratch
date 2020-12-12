@@ -122,7 +122,7 @@
 
 Add lexical binding tag to top of config file.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no") 
 
 ;; -*- lexical-binding: t -*-
 
@@ -132,11 +132,11 @@ Add lexical binding tag to top of config file.
 
 This section aims to allow users to select which portions of the configuration are used on different systems by defining this-system and the possible categories for systems. This system is simply a name identifying the current system the config is being used on. Then the categories (system-category-1, system-category-2, ...) define the possible different combinations of different systems that use that portion of the config. An example of a tangle tag follows:
 
-:tangle (if (member this-system system-category-1) "yes" "no")
+:tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 The above statement indicates that for following portion of the config, if the current system is a member of category-1 then it will be tangled and thus effectively added to the final config. As such, we can define different categories for the different permutations of systems that may need different portions of the config. Hopefully that all makes sense :)
 
-#+begin_src emacs-lisp :tangle yes 
+#+begin_src emacs-lisp :tangle ".emacs.d/init.el" 
 
 (setq this-system "main")
 (setq system-category-1 '("main" "work" "termux"))
@@ -148,13 +148,15 @@ The above statement indicates that for following portion of the config, if the c
 
 Setup package management. Some lines can be uncommented for fresh installs.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 ; Use package and add archives to list
 (require 'package)
 
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+
+(package-initialize)
 
 ; Uncomment for fresh install
 ;(package-refresh-contents)
@@ -172,7 +174,7 @@ Setup package management. Some lines can be uncommented for fresh installs.
 
 Make startup faster by reducing the frequency of garbage collection and then use a hook to measure Emacs startup time.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 ;; The default is 800 kilobytes.  Measured in bytes.
 (setq gc-cons-threshold (* 50 1000 1000))
@@ -194,7 +196,7 @@ Make startup faster by reducing the frequency of garbage collection and then use
 
 Dial the GC threshold back down so that garbage collection happens more frequently but in less time.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 ;; Make gc pauses faster by decreasing the threshold.
 (setq gc-cons-threshold (* 2 1000 1000))
@@ -211,7 +213,7 @@ Dial the GC threshold back down so that garbage collection happens more frequent
 
 I don't want a bunch of transient files showing up as untracked in the Git repo so I move them all to another location.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 ;; Keep transient cruft out of ~/.emacs.d/
 (setq user-emacs-directory "~/.cache/emacs/"
@@ -231,7 +233,7 @@ I don't want a bunch of transient files showing up as untracked in the Git repo 
 
 ** Buffers 
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 (global-auto-revert-mode t) ; Allow buffers to update from disk contents
 
@@ -241,7 +243,7 @@ I don't want a bunch of transient files showing up as untracked in the Git repo 
 
  Start the Emacs server from this instance so that all =emacsclient= calls are routed here.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 (server-start)
 
@@ -251,7 +253,7 @@ I don't want a bunch of transient files showing up as untracked in the Git repo 
 
 IDO provides interactive bits and bobs for buffers and files.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 (ido-mode 1)
 (ido-everywhere 1)
@@ -267,7 +269,7 @@ IDO provides interactive bits and bobs for buffers and files.
 
 Stolen from https://github.com/MatthewZMD
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 (use-package ivy
   :diminish
@@ -303,7 +305,7 @@ Stolen from https://github.com/MatthewZMD
 ** UI
 *** UI Elements
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (setq inhibit-startup-message t)
   (scroll-bar-mode -1)             ; Disable visible scrollbar
@@ -316,7 +318,7 @@ Stolen from https://github.com/MatthewZMD
 
 *** Scrolling
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (setq mouse-wheel-scroll-amount '(5 ((shift) . 5))) ; start out scrolling 1 line at a time
   (setq mouse-wheel-progressive-speed nil)              ; accelerate scrolling
@@ -327,7 +329,7 @@ Stolen from https://github.com/MatthewZMD
 
 *** Line Numbers
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (column-number-mode)
   (global-display-line-numbers-mode t)
@@ -340,7 +342,7 @@ Stolen from https://github.com/MatthewZMD
 #+end_src
 
 *** File Warnings
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (setq large-file-warning-threshold nil) ; Don't warn for large files
   (setq vc-follow-symlinks t)             ; Don't warn for following symlinked files
@@ -350,7 +352,7 @@ Stolen from https://github.com/MatthewZMD
 
 *** Hilight Matching Braces
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (use-package paren
     :config
@@ -361,7 +363,7 @@ Stolen from https://github.com/MatthewZMD
 
 *** Fix Annoying Buffers
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (use-package popwin
     :config
@@ -371,7 +373,7 @@ Stolen from https://github.com/MatthewZMD
 
 ** Theme
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (use-package doom-themes :defer t)
   (load-theme 'doom-gruvbox t)
@@ -379,7 +381,7 @@ Stolen from https://github.com/MatthewZMD
 #+end_src
 
 ** Fonts
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   ;; Set the font face based on platform
   (set-face-attribute 'default nil :font "JetBrains Mono Nerd Font" :height 80)
@@ -391,7 +393,7 @@ Stolen from https://github.com/MatthewZMD
 #+end_src
 ** Mode Line
 *** Time Format
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (setq display-time-format "%l:%M %p %b %y"
         display-time-default-load-average nil)
@@ -401,14 +403,14 @@ Stolen from https://github.com/MatthewZMD
 
 The [[https://github.com/myrjola/diminish.el][diminish]] package hides pesky minor modes from the modelines.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (use-package diminish)
 
 #+end_src
 
 *** Doom Modeline
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   ;; You must run (all-the-icons-install-fonts) one time after
   ;; installing this package!
@@ -439,7 +441,7 @@ The [[https://github.com/myrjola/diminish.el][diminish]] package hides pesky min
 #+end_src
 
 *** Saving Tweaks
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   ; Auto-save changed files
   (use-package super-save
@@ -457,7 +459,7 @@ The [[https://github.com/myrjola/diminish.el][diminish]] package hides pesky min
 
 ** Keybinds
 *** Evil!
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (defun dw/evil-hook ()
     (dolist (mode '(custom-mode
@@ -514,7 +516,7 @@ The [[https://github.com/myrjola/diminish.el][diminish]] package hides pesky min
 
 #+end_src
 *** General.el for Moar Evil!
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
  (use-package general
    :ensure t
@@ -532,7 +534,7 @@ The [[https://github.com/myrjola/diminish.el][diminish]] package hides pesky min
 [[https://github.com/justbur/emacs-which-key][which-key]] is great for getting an overview of what keybindings are available
 based on the prefix keys you entered.  Learned about this one from Spacemacs.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (use-package which-key
     :init (which-key-mode)
@@ -545,7 +547,7 @@ based on the prefix keys you entered.  Learned about this one from Spacemacs.
 
 *** Keycord Binds
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (use-package use-package-chords
     :disabled
@@ -554,7 +556,7 @@ based on the prefix keys you entered.  Learned about this one from Spacemacs.
 #+end_src
 
 *** Hydra
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (use-package hydra
     :defer 1)
@@ -562,7 +564,7 @@ based on the prefix keys you entered.  Learned about this one from Spacemacs.
 #+end_src
 * Editing
 ** General
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 ; Set Default indentation to 2 characters
 (setq-default tab-width 2)
@@ -599,7 +601,7 @@ based on the prefix keys you entered.  Learned about this one from Spacemacs.
 
 Set up Org Mode with a baseline configuration.  The following sections will add more things to it.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 ;; TODO: Mode this to another section
 (setq-default fill-column 80)
@@ -654,7 +656,7 @@ Set up Org Mode with a baseline configuration.  The following sections will add 
 #+end_src
 
 *** Tangle on Save
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
     ;; Since we don't want to disable org-confirm-babel-evaluate all
     ;; of the time, do it around the after-save-hook
@@ -672,7 +674,7 @@ Set up Org Mode with a baseline configuration.  The following sections will add 
 
 It’s nice to have a table of contents section for long literate configuration files (like this one!) so I use org-make-toc to automatically update the ToC in any header with a property named TOC.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 (use-package org-make-toc
   :hook (org-mode . org-make-toc-mode))
@@ -683,7 +685,7 @@ It’s nice to have a table of contents section for long literate configuration 
 
 Use bullet characters instead of asterisks, plus set the header font sizes to something more palatable.  A fair amount of inspiration has been taken from [[https://zzamboni.org/post/beautifying-org-mode-in-emacs/][this blog post]].
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 (use-package org-bullets
   :after org
@@ -721,7 +723,7 @@ Use bullet characters instead of asterisks, plus set the header font sizes to so
 #+end_src
 
 *** Org File Paths
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 ;;; Directory Options
 ;; Set default working directory for org files
@@ -736,7 +738,7 @@ Use bullet characters instead of asterisks, plus set the header font sizes to so
 
 #+end_src
 *** Tasks 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 ;;; Set Todo Options
 ;; Set keywords for todo items
@@ -763,7 +765,7 @@ Use bullet characters instead of asterisks, plus set the header font sizes to so
 
 #+end_src
 *** Capture 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 ;; open org-capture
 (global-set-key (kbd "C-c c") 'org-capture)
@@ -784,7 +786,7 @@ Use bullet characters instead of asterisks, plus set the header font sizes to so
 
 #+end_src
 *** Refile
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 ;;; Set Task Refiling Options
 ;; Targets include this file and any file contributing to the agenda - up to 9 levels deep
@@ -815,7 +817,7 @@ Use bullet characters instead of asterisks, plus set the header font sizes to so
 #+end_src
 *** Super-org-agenda
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 (use-package org-super-agenda
   :after org-agenda
@@ -851,7 +853,7 @@ Use bullet characters instead of asterisks, plus set the header font sizes to so
 
 *** Tags
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   ;; Configure common tags
   (setq org-tag-alist
@@ -874,7 +876,7 @@ Use bullet characters instead of asterisks, plus set the header font sizes to so
 
 *** Searching
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 (defun dw/search-org-files ()
   (interactive)
@@ -884,7 +886,7 @@ Use bullet characters instead of asterisks, plus set the header font sizes to so
 
 *** End  
 
- #+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+ #+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
  ;; This ends the use-package org-mode block
 )
@@ -893,7 +895,7 @@ Use bullet characters instead of asterisks, plus set the header font sizes to so
 
 *** Bindings
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 
 
@@ -920,7 +922,7 @@ Use bullet characters instead of asterisks, plus set the header font sizes to so
 
 ** Beancount
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 ;(use-package Beancount
 ;  :straight (beancount
@@ -942,7 +944,7 @@ Use bullet characters instead of asterisks, plus set the header font sizes to so
 #+end_src
 
 ** Avy
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (use-package avy
     :commands (avy-goto-char avy-goto-word-0 avy-goto-line))
@@ -961,7 +963,7 @@ This module is absolutely necessary for working inside of Emacs Lisp files,
 especially when trying to some parent of an expression (like a =setq=).  Makes
 tweaking Org agenda views much less annoying.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (use-package expand-region
     :bind (("M-[" . er/expand-region)
@@ -977,7 +979,7 @@ message.  No, it's using its own mode instead of ~emacs-lisp-mode~ for
 the questionable benefit of having a function inserting evaluation
 values after a newline.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 (setq initial-scratch-message "")
 (setq initial-major-mode 'emacs-lisp-mode)
 #+END_SRC
@@ -987,7 +989,7 @@ values after a newline.
 
 The keybindings for this are =C+M+-= and =C+M+==.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (use-package default-text-scale
     :defer 1
@@ -1000,7 +1002,7 @@ The keybindings for this are =C+M+-= and =C+M+==.
 
 Use ace-window for selecting windows quickly.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 (use-package ace-window
   :config
@@ -1010,7 +1012,7 @@ Use ace-window for selecting windows quickly.
 
 ** Window History
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 (winner-mode)
 (define-key evil-window-map "u" 'winner-undo)
@@ -1021,7 +1023,7 @@ Use ace-window for selecting windows quickly.
 
 Use burly to bookmark layouts and Emacs state.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 (use-package burly)
 
@@ -1032,7 +1034,7 @@ Use burly to bookmark layouts and Emacs state.
 
 Stolen from [[https://github.com/daviwil][the_dev_aspect]]. I have edited to fit my needs including removing the termux logic.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (setq dired-listing-switches "-agho --group-directories-first"
         dired-omit-files "^\\.[^.].*"
@@ -1090,7 +1092,7 @@ Stolen from [[https://github.com/daviwil][the_dev_aspect]]. I have edited to fit
 
 Stolen from [[https://github.com/daviwil][the_dev_aspect]]. Didn't even bother to change it ;) 
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (use-package openwith
     :config
@@ -1120,7 +1122,7 @@ Stolen from [[https://github.com/daviwil][the_dev_aspect]]. Didn't even bother t
 
 Can't remember where I stole this from. Might edit in future to integrate audio and video playing with Dired instead of using ncmpcpp for audio. I had to expand the file-name in the mpv-dir function to make it work with mpv. 
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (defun start-mpv (path &optional playlist-p)
 
@@ -1152,7 +1154,7 @@ Can't remember where I stole this from. Might edit in future to integrate audio 
 
 Stolen from [[https://github.com/daviwil][the_dev_aspect]]. I have edited to fit my needs including changing/adding keybinds.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (setq which-key-sort-order 'which-key-prefix-then-key-order)
 
@@ -1178,7 +1180,7 @@ Stolen from [[https://github.com/daviwil][the_dev_aspect]]. I have edited to fit
 
 https://magit.vc/manual/magit/
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (use-package magit
     :commands (magit-status magit-get-current-branch)
@@ -1192,7 +1194,7 @@ https://magit.vc/manual/magit/
 
 *** Forge
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (use-package forge
     :disabled)
@@ -1205,7 +1207,7 @@ This is an interesting extension to Magit that shows a TODOs section in your
 git status buffer containing all lines with TODO (or other similar words) in
 files contained within the repo.  More information at the [[https://github.com/alphapapa/magit-todos][GitHub repo]].
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (use-package magit-todos
     :defer t)
@@ -1214,7 +1216,7 @@ files contained within the repo.  More information at the [[https://github.com/a
 
 *** git-link
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 (use-package git-link
   :commands git-link
@@ -1225,7 +1227,7 @@ files contained within the repo.  More information at the [[https://github.com/a
 
 ** Projectile
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (use-package projectile
     :diminish projectile-mode
@@ -1247,7 +1249,7 @@ files contained within the repo.  More information at the [[https://github.com/a
 
 Set up nvm so that we can manage Node versions
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (use-package nvm
     :defer t)
@@ -1256,7 +1258,7 @@ Set up nvm so that we can manage Node versions
 
 Configure TypeScript and JavaScript language modes
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (use-package typescript-mode
     :mode "\\.ts\\'"
@@ -1291,7 +1293,7 @@ Configure TypeScript and JavaScript language modes
 
 *** C/C++
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 (use-package ccls
   :hook ((c-mode c++-mode objc-mode cuda-mode) .
@@ -1301,7 +1303,7 @@ Configure TypeScript and JavaScript language modes
 
 *** Haskell
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 (use-package haskell-mode) 
 
@@ -1309,7 +1311,7 @@ Configure TypeScript and JavaScript language modes
 
 *** Rust
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (use-package rust-mode
     :mode "\\.rs\\'"
@@ -1323,7 +1325,7 @@ Configure TypeScript and JavaScript language modes
 
 *** Emacs Lisp
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (add-hook 'emacs-lisp-mode-hook #'flycheck-mode)
 
@@ -1343,7 +1345,7 @@ Configure TypeScript and JavaScript language modes
 
 *** HTML
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 (use-package web-mode
   :mode "(\\.\\(html?\\|ejs\\|tsx\\|jsx\\)\\'"
@@ -1364,7 +1366,7 @@ Configure TypeScript and JavaScript language modes
 
 *** YAML
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (use-package yaml-mode
     :mode "\\.ya?ml\\'")
@@ -1375,7 +1377,7 @@ Configure TypeScript and JavaScript language modes
 **** Github stolen beancount functions
 Provide beancount major mode for personal ledger.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 (autoload 'ido-completing-read "ido")
 (require 'subr-x)
@@ -2359,7 +2361,7 @@ Essentially a much simplified version of `next-line'."
 
 **** My beancount functions
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 (defun beancount-fixme-replace ()
   "Search for next FIXME in ledger and insert account."
@@ -2375,7 +2377,7 @@ Essentially a much simplified version of `next-line'."
 
 Define Evil keybinds for editing Beancount ledger files.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 ; Custom keybinds for the entry view
 (evil-define-key 'normal beancount-mode-map
@@ -2385,7 +2387,7 @@ Define Evil keybinds for editing Beancount ledger files.
 
 *** HTTP
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (use-package know-your-http-well
     :defer t)
@@ -2394,7 +2396,7 @@ Define Evil keybinds for editing Beancount ledger files.
 
 *** Python
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 (use-package elpy
   :ensure t
@@ -2410,7 +2412,7 @@ Define Evil keybinds for editing Beancount ledger files.
 
 *** Clojure
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 (use-package cider)
 
@@ -2419,7 +2421,7 @@ Define Evil keybinds for editing Beancount ledger files.
 ** Productivity
 *** Syntax checking with Flycheck
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (use-package flycheck
     :defer t
@@ -2429,7 +2431,7 @@ Define Evil keybinds for editing Beancount ledger files.
 
 *** Snippets
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (use-package yasnippet
     :hook (prog-mode . yas-minor-mode)
@@ -2440,7 +2442,7 @@ Define Evil keybinds for editing Beancount ledger files.
 
 *** Smart Parens
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (use-package smartparens
     :hook (prog-mode . smartparens-mode))
@@ -2449,7 +2451,7 @@ Define Evil keybinds for editing Beancount ledger files.
 
 *** Rainbow Delimiters
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
   (use-package rainbow-delimiters
     :hook (prog-mode . rainbow-delimiters-mode))
@@ -2460,7 +2462,7 @@ Define Evil keybinds for editing Beancount ledger files.
 
 Sets the background of HTML color strings in buffers to be the color mentioned.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 (use-package rainbow-mode
   :defer t
@@ -2476,7 +2478,7 @@ Sets the background of HTML color strings in buffers to be the color mentioned.
 
 Functions and keybinds for publishing my org-based personal website
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 ;; Example from the_dev_aspect's config
 
@@ -2494,7 +2496,7 @@ Functions and keybinds for publishing my org-based personal website
 
 Initial setup for elfeed.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-2) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-2) ".emacs.d/init.el" "no")
 
 ; Use elfeed
 (use-package elfeed
@@ -2522,7 +2524,7 @@ Initial setup for elfeed.
 
 Define elfeed only keybinds and fixes using Evil.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-2) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-2) ".emacs.d/init.el" "no")
 
 ; Custom keybinds for the entry view
 (evil-define-key 'normal elfeed-show-mode-map 
@@ -2543,7 +2545,7 @@ Define elfeed only keybinds and fixes using Evil.
 
 Use youtube-dl to download audio/video from elfeed entries. 
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-2) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-2) ".emacs.d/init.el" "no")
 
 ; Set executable path for the most illegal youtube-dl ;)
 (setq youtube-dl-path "/usr/bin/youtube-dl")
@@ -2605,7 +2607,7 @@ Use youtube-dl to download audio/video from elfeed entries.
 
 Adds a nice formatted youtube entry. Stolen from https://github.com/xFA25E.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-2) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-2) ".emacs.d/init.el" "no")
 
 (require 'elfeed-db)
 (require 'xml-query)
@@ -2647,7 +2649,7 @@ information with future `DB-ENTRY'. `TYPE' is ignored."
 
 ** Mu4e 
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-2) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-2) ".emacs.d/init.el" "no")
 
 (use-package mu4e
   :defer t
@@ -2723,7 +2725,7 @@ information with future `DB-ENTRY'. `TYPE' is ignored."
 
 Define base bindings that aren't SPC lead.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 ; Make ESC cancel all mini-buffer menus
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -2734,7 +2736,7 @@ Define base bindings that aren't SPC lead.
 
 Define SPC lead bindings that don't have submenus.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 ; Make ESC cancel all mini-buffer menus
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
@@ -2769,7 +2771,7 @@ Define SPC lead bindings that don't have submenus.
 
 Define SPC lead bindings that open Emacs programs.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 ; Menu for opening applications
 (dw/leader-key-def
@@ -2784,7 +2786,7 @@ Define SPC lead bindings that open Emacs programs.
 
 Define SPC lead bindings that manipulate Emacs windows.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 ; Open evil-window keybind menus
 (dw/leader-key-def
   "w"  '(evil-window-map :which-key "window"))
@@ -2795,7 +2797,7 @@ Define SPC lead bindings that manipulate Emacs windows.
 
 Define SPC lead bindings for projectile.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 ; Commands for projectile projects
 (dw/leader-key-def
@@ -2826,7 +2828,7 @@ Define SPC lead bindings for projectile.
 
 Define SPC lead bindings for magit.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 ; Commands for magit
 (dw/leader-key-def
@@ -2850,7 +2852,7 @@ Define SPC lead bindings for magit.
 
 Define SPC lead bindings for various Emacs and general system utilites.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 ; Keybinds
 (dw/leader-key-def
@@ -2862,7 +2864,7 @@ Define SPC lead bindings for various Emacs and general system utilites.
 
 Define SPC lead bindings for finding documentation.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 ; Help 
 (dw/leader-key-def
@@ -2876,7 +2878,7 @@ Define SPC lead bindings for finding documentation.
 
 Define SPC lead bindings that manipulate Emacs buffers and bookmarks.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 ; Buffer
 (dw/leader-key-def
@@ -2907,7 +2909,7 @@ Define SPC lead bindings that manipulate Emacs buffers and bookmarks.
 
 Define SPC lead bindings for dired.
 
-#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) "yes" "no")
+#+begin_src emacs-lisp :tangle (if (member this-system system-category-1) ".emacs.d/init.el" "no")
 
 (dw/leader-key-def
   "d"   '(:ignore t :which-key "dired")
